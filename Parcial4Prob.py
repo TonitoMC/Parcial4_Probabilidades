@@ -5,10 +5,8 @@ def matriz_transicion(niveles):
     columnas = 0
     for i in range(niveles + 2):
         columnas += i
-    print(columnas)
     matriz_transicion = np.zeros((columnas, columnas))
     nivel_actual = 1
-    ultimo_numero = 0
     ultimo_clavo = 0
     while (nivel_actual <= niveles):
         for i in range(ultimo_clavo, ultimo_clavo + nivel_actual):
@@ -26,18 +24,6 @@ def factorial_suma(i):
     for j in range (i+1):
         toreturn += j
     return toreturn
-
-
-print(factorial_suma(5))
-
-mat = matriz_transicion(6)
-
-print(matriz_transicion(6))
-
-matprob = np.linalg.matrix_power(mat, 6)
-
-for i in range(21, 28):
-    print(f"Casillero {i}: {matprob[0,i]}")
 
 def casillero_random():
     casillero_actual = 0
@@ -74,6 +60,7 @@ for i in range(attemps):
     elif (casillero_aleatorio == 27):
         casillero_27 += 1
 
+print("Ley de Grandes Numeros")
 print(f"Intentos: {attemps}")
 print(f"Casillero 21: {casillero_21}")
 print(f"Casillero 22: {casillero_22}")
@@ -98,3 +85,17 @@ print(f"% Casillero 24: {casillero_24p}")
 print(f"% Casillero 25: {casillero_25p}")
 print(f"% Casillero 26: {casillero_26p}")
 print(f"% Casillero 27: {casillero_27p}")
+
+def prob_markov(niveles):
+    mat = matriz_transicion(niveles)
+    #print(mat)
+    matprob = np.linalg.matrix_power(mat, niveles)
+    valor_esperado = 0
+    for i in range (factorial_suma(niveles), factorial_suma(niveles + 1)):
+        valor_esperado += matprob[0,i] * i
+        print(f"Casillero {i}: {matprob[0,i]}")
+    print(f"Valor Esperado: {valor_esperado}")
+
+
+print("Cadenas de Markov")
+prob_markov(6)
